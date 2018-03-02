@@ -11,7 +11,7 @@
 				@csrf
 				<div class="form-group">
 					<label class="px-3" for="title">Title</label>
-					<input name="title" type="text" class="form-control px-3 @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Enter title" value="{{ old('title', $product->title) }}">
+					<input name="title" type="text" class="form-control px-3 @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Enter title" value="{{ old('title') }}">
 					@if($errors->has('title'))
 					<div class="invalid-feedback px-3">
 						{{ $errors->first('title') }}

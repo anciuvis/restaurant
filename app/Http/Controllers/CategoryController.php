@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+		public function __construct() {
+			// uzdeda middleware grupe ant visu kontrolerio routu, isskyrus paminetus excepte
+			$this->middleware('auth')->except('index', 'show');
+			// atvirkstinis variantas su only:
+			// $this->middleware('auth')->only('index', 'show');
+		}
+
     /**
      * Display a listing of the resource.
      *
@@ -17,9 +24,18 @@ class CategoryController extends Controller
 			// $categories = Category::all();
 			// padarom kietesni su rikiavimu pagal ID ASC
 			$categories = Category::orderBy('id','asc')->get();
-
-      return view('category/index', ['categories' => $categories]);
+      return view('category/index', [
+				'categories' => $categories,
+		]);
     }
+
+		private function validation(Request $request) {
+			$request->validate([
+				'title' 		=> 'required|max:300',
+			], [
+				'required'	=> 'Laukelis :attribute privalomas!',
+			]);
+		}
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +55,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+			$this->validation($request);
+			$category = new Category();
+			$category->title = $request->title;
+			$category->save();
+			return redirect()->route('categories.index', $category->id);
     }
 
     /**
@@ -50,7 +70,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-       return view('categories/show', ['category' => $category]);
+       return view('category/show', ['category' => $category]);
     }
 
     /**
@@ -61,7 +81,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+			return view('category/edit', [
+				'category' 		=> $category,
+			]);
     }
 
     /**
@@ -73,7 +95,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+			$this->validation($request);
+			$category->title = $request->title;
+			$category->save();
+			return redirect()->route('categories.show', $category->id);
     }
 
     /**
@@ -83,7 +108,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
-		// nereikia daryti find, nes per instantacija ateina jau ta reikiama kategorija pagal ID
+		// nereikia daryti ::find (kaip dareme ProductControllere), nes per instantacija ateina jau ta reikiama kategorija pagal ID
     {
         $category->delete();
 				return redirect()->route('categories.index');

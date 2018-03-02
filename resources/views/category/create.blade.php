@@ -2,6 +2,9 @@
 @section('content')
 	<body>
 		<div class="container w-75">
+			<div class="mb-3">
+				<a href="{{ route('categories.store') }}"><button class="btn btn-danger">Back</button></a>
+			</div>
 			<h2 class="text-center">Create new category form</h2>
 			<form action="{{ route('categories.store') }}" method="POST" class="needs-validation">
 				@csrf

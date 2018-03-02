@@ -14,8 +14,8 @@ class AddForeignToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-          $table->foreign('category')->references('id')->on('categories');
-					$table->foreign('manufacturer')->references('id')->on('manufacturers');
+          $table->foreign('category')->references('id')->on('categories')->onDelete('cascade');
+					$table->foreign('manufacturer')->references('id')->on('manufacturers')->onDelete('cascade');
         });
     }
 

@@ -2,6 +2,9 @@
 @section('content')
 	<body>
 		<div class="container">
+			<div class="mb-3">
+				<a href="{{ route('home') }}"><button class="btn btn-danger">Back</button></a>
+			</div>
 			<section>
 				<div class="row justify-content-center">
 					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
