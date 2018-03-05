@@ -12,7 +12,7 @@ class Product extends Model
 		return $this->hasOne('App\Category', 'id', 'category');
 	}
 	public function manufacturers() {
-		// sukuria sasaja su Category modeliu:
+		// sukuria sasaja su Manufacturer modeliu:
 		return $this->hasOne('App\Manufacturer', 'id', 'manufacturer');
 	}
 
