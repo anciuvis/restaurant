@@ -23,9 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() // galima sukurti daugiau metodu, ir nukreipti i juos
+    public function index(Request $request) // galima sukurti daugiau metodu, ir nukreipti i juos
     {
-			$products = Product::all();
+			// $request->input('category') - paima inputa is requesto
+			// $request->category
+			if (!$request->category) {
+				$products = Product::all();
+			} else {
+				$products = Product::where('category', $request->category)->get();
+			}
 			$categories = Category::all();
       return view('home', [
 				'products' 		=> $products,
